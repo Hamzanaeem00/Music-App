@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { genres } from '../assets/constants';
-import { SongCard } from '../components';
+import { Loader, SongCard } from '../components';
 import { useGetTopChartsQuery } from '../redux/services/ShazamCore';
 const Discover = () => {
-  const {data , isFetching, error} = useGetTopChartsQuery
+  const {data , isFetching, error} = useGetTopChartsQuery();
   console.log("data==>", data)
+  if(isFetching) return <Loader title= "Loading songs..."/>
+  if(error) return <Error />
   const genreTitle = 'Pop';
   console.log('genres==>', genres);
   return (
