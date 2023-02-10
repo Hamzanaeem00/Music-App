@@ -1,14 +1,21 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
+import { useDispatch, useSelector } from 'react-redux';
 import { genres } from '../assets/constants';
 import { Loader, SongCard } from '../components';
 import { useGetTopChartsQuery } from '../redux/services/ShazamCore';
+
 const Discover = () => {
+
+  const dispatch = useDispatch();
+  const {activeSong, isPlaying } = useSelector ((state)=> state.player)
+
   const {data , isFetching, error} = useGetTopChartsQuery();
   console.log("data==>", data)
   if(isFetching) return <Loader title= "Loading songs..."/>
   if(error) return <Error />
   const genreTitle = 'Pop';
   console.log('genres==>', genres);
+
   return (
     <div className="flex flex-col">
       <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
@@ -29,7 +36,10 @@ const Discover = () => {
 
             <SongCard  key={song.key}
             song={song}
+            isPlaying={isPlaying}
+            activeSong={activeSong}
             i={i}
+            data={data}
             />
           ))
         }
