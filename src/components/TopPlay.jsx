@@ -9,7 +9,7 @@ import { useGetTopChartsQuery } from "../redux/services/ShazamCore";
 import { playPause , setActiveSong } from "../redux/features/playerSlice";
 import PlayPause from "./PlayPause";
 
-const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
+const TopChartCard = ({ song,  i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => {
   <div className={`w-full flex flex-row items-center hover:bg-[#4c426e] ${activeSong?.title === song?.title ? 'bg-[#4c426e]' : 'bg-transparent'} py-2 p-4 rounded-lg cursor-pointer mb-2`}>
     <h3 className="font-bold text-base text-white mr-3">{i + 1}.</h3>
     <div className="flex-1 flex flex-row justify-between items-center">
@@ -20,7 +20,7 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
             {song?.title}
           </p>
         </Link>
-        <Link to={`/artists/${song?.artists[0].adamid}`}>
+        <Link to={`/artists/${song?.artists?.[0]?.adamid}`}>
           <p className="text-base text-gray-300 mt-1">
             {song?.subtitle}
           </p>
@@ -35,7 +35,7 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
       handlePlay={handlePlayClick}
     />
   </div>
-);
+};
 
 const TopPlay = () => {
   const dispatch = useDispatch();
@@ -106,7 +106,7 @@ const TopPlay = () => {
               style={{ width: '25%', height: 'auto' }}
               className="shadow-lg rounded-full animate-slideright"
             >
-              <Link to={`/artists/${artist?.artists[0].adamid}`}>
+              <Link to={`/artists/${artist?.artists?.[0]?.adamid}`}>
                 <img src={artist?.images?.background} alt="Name" className="rounded-full w-full object-cover" />
               </Link>
             </SwiperSlide>
